@@ -15,7 +15,4 @@ int main(int argc, char **argv) {
     for (const auto &lexeme: lexer.get_lexemes()) {
         fmt::print("{}\n", lexeme.to_string());
     }
-
-    lexer.dump_lexemes_as_json();
-
 }
