@@ -10,6 +10,7 @@ enum class LexType {
     RIGHT_CURLY,
     LEFT_BRACKET,
     RIGHT_BRACKET,
+    COMMA,
     FN_KEYWORD,
     SYMBOL,
     LITERAL,

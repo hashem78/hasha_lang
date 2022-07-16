@@ -26,6 +26,9 @@ namespace hasha {
             } else if (token == "}") {
                 lexemes.emplace_back(LexType::RIGHT_CURLY, "}");
                 token.clear();
+            } else if (token == ",") {
+                lexemes.emplace_back(LexType::COMMA, ",");
+                token.clear();
             } else if (token == "=") {
                 lexemes.emplace_back(LexType::SYMBOL, "=");
                 token.clear();
@@ -92,7 +95,7 @@ namespace hasha {
     }
 
     bool Lexer::is_legal(char c) {
-        auto special = std::string("{}()=+-*/%");
+        auto special = std::string("{}()=+-*/%,");
         for (auto ch: special)
             if (ch == c)
                 return true;
