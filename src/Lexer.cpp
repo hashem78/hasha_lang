@@ -47,6 +47,30 @@ namespace hasha {
             } else if (token == "*") {
                 lexemes.emplace_back(LexType::ASTERISK, "*");
                 token.clear();
+            } else if (token == ">") {
+                lexemes.emplace_back(LexType::GREATER_THAN, ">");
+                token.clear();
+            } else if (token == "<") {
+                lexemes.emplace_back(LexType::LESS_THAN, "<");
+                token.clear();
+            } else if (token == "!") {
+                lexemes.emplace_back(LexType::EXCLAMATION, "!");
+                token.clear();
+            } else if (token == "&") {
+                lexemes.emplace_back(LexType::AMPERSAND, "&");
+                token.clear();
+            } else if (token == "^") {
+                lexemes.emplace_back(LexType::CARET, "^");
+                token.clear();
+            } else if (token == "~") {
+                lexemes.emplace_back(LexType::TILDE, "~");
+                token.clear();
+            } else if (token == ".") {
+                lexemes.emplace_back(LexType::DOT, ".");
+                token.clear();
+            } else if (token == "|") {
+                lexemes.emplace_back(LexType::PIPE, "|");
+                token.clear();
             } else if (token == "/") {
                 lexemes.emplace_back(LexType::FORWARD_SLASH, "/");
                 token.clear();
@@ -101,7 +125,7 @@ namespace hasha {
     }
 
     bool Lexer::is_legal(char c) {
-        auto special = std::string("{}[]()=+-*/%,");
+        auto special = std::string("{}[]()=+-*/%,<>!&^~.|");
         for (auto ch: special)
             if (ch == c)
                 return true;
