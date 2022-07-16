@@ -21,7 +21,6 @@ namespace hasha {
     class Lexer {
 
         std::list<Lexeme> lexemes;
-        Parser parser;
         int cursor = 0;
         std::string_view to_lex;
 
@@ -43,7 +42,6 @@ namespace hasha {
         void skip_spaces();
 
     public:
-        Lexer();
 
         [[nodiscard]]
         const std::list<Lexeme> &get_lexemes() const;

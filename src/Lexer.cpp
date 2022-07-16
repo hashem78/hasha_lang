@@ -100,10 +100,6 @@ namespace hasha {
         return lexemes;
     }
 
-    Lexer::Lexer() : parser(lexemes) {
-
-    }
-
     bool Lexer::done() {
         return cursor >= to_lex.length();
     }
