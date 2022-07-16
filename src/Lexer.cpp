@@ -26,26 +26,32 @@ namespace hasha {
             } else if (token == "}") {
                 lexemes.emplace_back(LexType::RIGHT_CURLY, "}");
                 token.clear();
+            } else if (token == "[") {
+                lexemes.emplace_back(LexType::LEFT_SQUARE_BRACKET, "[");
+                token.clear();
+            } else if (token == "]") {
+                lexemes.emplace_back(LexType::RIGHT_SQUARE_BRACKET, "]");
+                token.clear();
             } else if (token == ",") {
                 lexemes.emplace_back(LexType::COMMA, ",");
                 token.clear();
             } else if (token == "=") {
-                lexemes.emplace_back(LexType::SYMBOL, "=");
+                lexemes.emplace_back(LexType::EQUALS, "=");
                 token.clear();
             } else if (token == "+") {
-                lexemes.emplace_back(LexType::SYMBOL, "+");
+                lexemes.emplace_back(LexType::PLUS, "+");
                 token.clear();
             } else if (token == "-") {
-                lexemes.emplace_back(LexType::SYMBOL, "-");
+                lexemes.emplace_back(LexType::MINUS, "-");
                 token.clear();
             } else if (token == "*") {
-                lexemes.emplace_back(LexType::SYMBOL, "*");
+                lexemes.emplace_back(LexType::ASTERISK, "*");
                 token.clear();
             } else if (token == "/") {
-                lexemes.emplace_back(LexType::SYMBOL, "/");
+                lexemes.emplace_back(LexType::FORWARD_SLASH, "/");
                 token.clear();
             } else if (token == "%") {
-                lexemes.emplace_back(LexType::SYMBOL, "%");
+                lexemes.emplace_back(LexType::PERCENT, "%");
                 token.clear();
             } else if (is_literal(token)) {
                 lexemes.emplace_back(LexType::LITERAL, token);
@@ -95,7 +101,7 @@ namespace hasha {
     }
 
     bool Lexer::is_legal(char c) {
-        auto special = std::string("{}()=+-*/%,");
+        auto special = std::string("{}[]()=+-*/%,");
         for (auto ch: special)
             if (ch == c)
                 return true;
