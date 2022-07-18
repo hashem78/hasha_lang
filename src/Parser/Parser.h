@@ -10,14 +10,14 @@
 #include <memory>
 
 #include "fmt/format.h"
-#include "Lexeme.h"
+#include "../Lexer/Lexeme.h"
 #include "utils.h"
-#include "Token.h"
-#include "Lexer.h"
-#include "LiteralExpression.h"
-#include "FunctionParameter.h"
-#include "FunctionDeclaration.h"
-#include "VariableDeclaration.h"
+#include "Tokens/Token.h"
+#include "../Lexer/Lexer.h"
+#include "Tokens/Expressions/LiteralExpression.h"
+#include "Tokens/FunctionParameter.h"
+#include "Tokens/FunctionDeclaration.h"
+#include "Tokens/VariableDeclaration.h"
 
 namespace hasha {
 

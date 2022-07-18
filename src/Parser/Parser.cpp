@@ -163,6 +163,7 @@ namespace hasha {
         if (auto literal_expression = parse_literal_expression()) {
             return literal_expression;
         }
+        return nullptr;
     }
 
     std::unique_ptr<LiteralExpression> Parser::parse_literal_expression() {

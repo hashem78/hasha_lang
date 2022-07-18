@@ -1,5 +1,5 @@
-#include "Lexer.h"
-#include "Parser.h"
+#include "Lexer/Lexer.h"
+#include "Parser/Parser.h"
 #include <fstream>
 #include <iostream>
 #include "fmt/format.h"

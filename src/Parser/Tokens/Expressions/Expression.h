@@ -5,7 +5,7 @@
 #ifndef HASHA_LANG_EXPRESSION_H
 #define HASHA_LANG_EXPRESSION_H
 
-#include "Token.h"
+#include "../Token.h"
 
 namespace hasha {
 

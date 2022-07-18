@@ -8,27 +8,27 @@ add_subdirectory(libs/magic_enum)
 add_subdirectory(libs/json)
 add_subdirectory(libs/date)
 
-include_directories(hasha_lang src/include)
+include_directories(hasha_lang src/Parser/include)
 add_executable(hasha_lang
-        main.cpp
-        src/Lexer.cpp
-        src/include/Lexer.h
-        src/Lexeme.cpp
-        src/include/Lexeme.h
-        src/include/LexType.h
-        src/include/utils.h
-        src/Parser.cpp
-        src/include/Parser.h
-        src/include/Token.h
-        src/Token.cpp
-        src/Block.cpp
-        src/include/Block.h
-        src/include/FunctionParameter.h
-        src/FunctionParameter.cpp
-        src/include/FunctionParameter.h
-        src/FunctionDeclaration.cpp
-        src/include/FunctionDeclaration.h
-        src/VariableDeclaration.cpp src/include/VariableDeclaration.h src/Expression.cpp src/include/Expression.h src/LiteralExpression.cpp src/include/LiteralExpression.h)
+        src/main.cpp
+        src/Lexer/Lexer.cpp
+        src/Lexer/Lexer.h
+        src/Lexer/Lexeme.cpp
+        src/Lexer/Lexeme.h
+        src/Lexer/LexType.h
+        src/Parser/utils.h
+        src/Parser/Parser.cpp
+        src/Parser/Parser.h
+        src/Parser/Tokens/Token.h
+        src/Parser/Tokens/Token.cpp
+        src/Parser/Tokens/Block.cpp
+        src/Parser/Tokens/Block.h
+        src/Parser/Tokens/FunctionParameter.h
+        src/Parser/Tokens/FunctionParameter.cpp
+        src/Parser/Tokens/FunctionParameter.h
+        src/Parser/Tokens/FunctionDeclaration.cpp
+        src/Parser/Tokens/FunctionDeclaration.h
+        src/Parser/Tokens/VariableDeclaration.cpp src/Parser/Tokens/VariableDeclaration.h src/Parser/Tokens/Expressions/Expression.cpp src/Parser/Tokens/Expressions/Expression.h src/Parser/Tokens/Expressions/LiteralExpression.cpp src/Parser/Tokens/Expressions/LiteralExpression.h)
 
 target_link_libraries(hasha_lang
         fmt::fmt-header-only
