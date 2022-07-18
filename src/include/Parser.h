@@ -7,7 +7,6 @@
 
 #include <string>
 #include <deque>
-#include <algorithm>
 #include <memory>
 
 #include "fmt/format.h"
@@ -15,6 +14,10 @@
 #include "utils.h"
 #include "Token.h"
 #include "Lexer.h"
+#include "LiteralExpression.h"
+#include "FunctionParameter.h"
+#include "FunctionDeclaration.h"
+#include "VariableDeclaration.h"
 
 namespace hasha {
 
@@ -49,6 +52,9 @@ namespace hasha {
 
         std::unique_ptr<VariableDeclaration> parse_variable_declaration();
 
+        std::unique_ptr<Expression> parse_expression();
+        std::unique_ptr<LiteralExpression> parse_literal_expression();
+
 
     public:
         Parser();
@@ -58,6 +64,9 @@ namespace hasha {
 
         [[nodiscard]]
         const std::deque<std::unique_ptr<Token>> *get_tokens() const;
+
+
+
     };
 
 } // hasha_lang

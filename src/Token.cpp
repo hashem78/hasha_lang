@@ -5,5 +5,20 @@
 #include "Token.h"
 
 namespace hasha {
-    int Token::id_counter = 0;
+    int Token::token_counter = 0;
+
+    Token::Token(std::string token_type) : m_token_type(std::move(token_type)), m_id(token_counter++) {
+
+    }
+
+    int Token::get_id() const {
+        return m_id;
+    }
+
+    nlohmann::json Token::to_json() const {
+        return {
+                {"id",         m_id},
+                {"token_type", m_token_type}
+        };
+    }
 }

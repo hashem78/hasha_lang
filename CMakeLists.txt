@@ -19,7 +19,16 @@ add_executable(hasha_lang
         src/include/utils.h
         src/Parser.cpp
         src/include/Parser.h
-        src/include/Token.h src/Token.cpp)
+        src/include/Token.h
+        src/Token.cpp
+        src/Block.cpp
+        src/include/Block.h
+        src/include/FunctionParameter.h
+        src/FunctionParameter.cpp
+        src/include/FunctionParameter.h
+        src/FunctionDeclaration.cpp
+        src/include/FunctionDeclaration.h
+        src/VariableDeclaration.cpp src/include/VariableDeclaration.h src/Expression.cpp src/include/Expression.h src/LiteralExpression.cpp src/include/LiteralExpression.h)
 
 target_link_libraries(hasha_lang
         fmt::fmt-header-only

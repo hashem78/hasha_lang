@@ -15,6 +15,9 @@ namespace hasha {
             if (token == "fn") {
                 lexemes->emplace_back(LexType::FN_KEYWORD, "fn");
                 token.clear();
+            } else if (token == "return") {
+                lexemes->emplace_back(LexType::RETURN_KEYWORD, "return");
+                token.clear();
             } else if (token == "(") {
                 lexemes->emplace_back(LexType::LEFT_BRACKET, "(");
                 token.clear();

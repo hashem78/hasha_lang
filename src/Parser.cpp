@@ -76,6 +76,11 @@ namespace hasha {
 
             if (!parsed_block_token_list) return false;
 
+            if (!expect(LexType::RETURN_KEYWORD)) return false;
+
+            auto parsed_expression = parse_expression();
+            if (!parsed_expression) return false;
+
             if (!expect(LexType::RIGHT_CURLY)) return false;
 
             auto block = Block::create(std::move(parsed_block_token_list));
@@ -83,7 +88,9 @@ namespace hasha {
             auto declaration = FunctionDeclaration::create(
                     return_type, name,
                     std::move(paramsList),
-                    std::move(block));
+                    std::move(block),
+                    std::move(parsed_expression)
+                    );
             m_parsed_tokens->push_back(std::move(declaration));
             return true;
         }
@@ -152,4 +159,17 @@ namespace hasha {
     }
 
 
+    std::unique_ptr<Expression> Parser::parse_expression() {
+        if (auto literal_expression = parse_literal_expression()) {
+            return literal_expression;
+        }
+    }
+
+    std::unique_ptr<LiteralExpression> Parser::parse_literal_expression() {
+        auto literal = current_lexeme.get_data();
+        if (accept(LexType::LITERAL)) {
+            return std::make_unique<LiteralExpression>(literal);
+        }
+        return nullptr;
+    }
 } // hasha_lang

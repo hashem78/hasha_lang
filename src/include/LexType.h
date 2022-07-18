@@ -14,6 +14,7 @@ enum class LexType {
     RIGHT_SQUARE_BRACKET,
     COMMA,
     FN_KEYWORD,
+    RETURN_KEYWORD,
     EQUALS,
     PLUS,
     MINUS,
