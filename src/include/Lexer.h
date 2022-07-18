@@ -9,10 +9,10 @@
 #include <fstream>
 #include <iomanip>
 #include <chrono>
+#include <deque>
 #include "date/date.h"
 #include "fmt/format.h"
 #include "Lexeme.h"
-#include "Parser.h"
 #include "utils.h"
 #include "nlohmann/json.hpp"
 
@@ -20,9 +20,11 @@ namespace hasha {
 
     class Lexer {
 
-        std::list<Lexeme> lexemes;
         int cursor = 0;
-        std::string_view to_lex;
+
+        std::string_view m_line;
+
+        std::shared_ptr<std::deque<Lexeme>> lexemes;
 
         inline bool done();
 
@@ -38,17 +40,21 @@ namespace hasha {
 
         std::string consume();
 
-
         void skip_spaces();
+
 
     public:
 
+        void lex();
+
+        void set_line(std::string_view line);
+
         [[nodiscard]]
-        const std::list<Lexeme> &get_lexemes() const;
+        std::shared_ptr<std::deque<Lexeme>> get_lexemes() const;
 
-        void lex(std::string_view);
+        Lexer();
 
-        void dump_lexemes_as_json();
+        static void dump_lexemes_as_json(const std::deque<Lexeme> &lexemes);
     };
 
 } // hasha

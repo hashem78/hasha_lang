@@ -19,7 +19,7 @@ add_executable(hasha_lang
         src/include/utils.h
         src/Parser.cpp
         src/include/Parser.h
-        src/include/Token.h)
+        src/include/Token.h src/Token.cpp)
 
 target_link_libraries(hasha_lang
         fmt::fmt-header-only
@@ -27,3 +27,5 @@ target_link_libraries(hasha_lang
         nlohmann_json::nlohmann_json
         date::date)
 
+add_compile_options(-fsanitize=address)
+add_link_options(-fsanitize=address)

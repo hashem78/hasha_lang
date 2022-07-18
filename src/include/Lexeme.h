@@ -23,11 +23,16 @@ namespace hasha {
 
         auto operator<=>(const Lexeme &rhs) const = default;
 
+        [[nodiscard]] LexType get_type() const;
+
         [[nodiscard]] std::string get_data() const;
+
+        [[nodiscard]] std::string get_type_as_string() const;
+
+        [[nodiscard]] std::string get_data_as_string() const;
 
         [[nodiscard]] std::string to_string() const;
 
-        std::string get_type_as_string() const;
     };
 
 

@@ -6,30 +6,58 @@
 #define HASHA_LANG_PARSER_H
 
 #include <string>
-#include <functional>
-#include <thread>
-#include <list>
-#include <condition_variable>
-#include <functional>
-#include <sstream>
+#include <deque>
 #include <algorithm>
-#include "fmt/format.h"
+#include <memory>
 
+#include "fmt/format.h"
 #include "Lexeme.h"
 #include "utils.h"
 #include "Token.h"
+#include "Lexer.h"
 
 namespace hasha {
 
     class Parser {
-        const std::list<Lexeme> &lexemes;
-    public:
-        Parser(const std::list<Lexeme> &lexemes);
+        using TokenList = std::deque<std::unique_ptr<Token>>;
+        using LexemeList = std::deque<Lexeme>;
 
-        std::list<Token> parse();
+        std::unique_ptr<TokenList> m_parsed_tokens;
+        std::shared_ptr<LexemeList> m_lexemes;
+
+        int cursor = 0;
+
+        Lexeme current_lexeme;
+
+        bool next_token();
 
         [[nodiscard]]
-        const std::list<Lexeme> &get_lexemes() const;
+        bool done() const;
+
+        bool accept(const LexType &);
+
+        bool expect(const LexType &);
+
+        [[nodiscard]]
+        Lexeme peek(int k = 1) const;
+
+        bool parse_function();
+
+        std::unique_ptr<ParameterList> parse_function_params();
+
+        std::unique_ptr<BlockTokenList> parse_block();
+
+        std::unique_ptr<VariableDeclaration> parse_variable_declaration();
+
+
+    public:
+        Parser();
+
+        void parse(const std::shared_ptr<std::deque<Lexeme>> &lexemes);
+
+
+        [[nodiscard]]
+        const std::deque<std::unique_ptr<Token>> *get_tokens() const;
     };
 
 } // hasha_lang

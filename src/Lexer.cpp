@@ -4,104 +4,102 @@
 
 #include "Lexer.h"
 
+#include <memory>
+
 
 namespace hasha {
-    void Lexer::lex(std::string_view line) {
-        this->to_lex = line;
+    void Lexer::lex() {
 
         std::string token;
         while (!done() || !token.empty()) {
             if (token == "fn") {
-                lexemes.emplace_back(LexType::FN_KEYWORD, "fn");
+                lexemes->emplace_back(LexType::FN_KEYWORD, "fn");
                 token.clear();
             } else if (token == "(") {
-                lexemes.emplace_back(LexType::LEFT_BRACKET, "(");
+                lexemes->emplace_back(LexType::LEFT_BRACKET, "(");
                 token.clear();
             } else if (token == ")") {
-                lexemes.emplace_back(LexType::RIGHT_BRACKET, ")");
+                lexemes->emplace_back(LexType::RIGHT_BRACKET, ")");
                 token.clear();
             } else if (token == "{") {
-                lexemes.emplace_back(LexType::LEFT_CURLY, "{");
+                lexemes->emplace_back(LexType::LEFT_CURLY, "{");
                 token.clear();
             } else if (token == "}") {
-                lexemes.emplace_back(LexType::RIGHT_CURLY, "}");
+                lexemes->emplace_back(LexType::RIGHT_CURLY, "}");
                 token.clear();
             } else if (token == "[") {
-                lexemes.emplace_back(LexType::LEFT_SQUARE_BRACKET, "[");
+                lexemes->emplace_back(LexType::LEFT_SQUARE_BRACKET, "[");
                 token.clear();
             } else if (token == "]") {
-                lexemes.emplace_back(LexType::RIGHT_SQUARE_BRACKET, "]");
+                lexemes->emplace_back(LexType::RIGHT_SQUARE_BRACKET, "]");
                 token.clear();
             } else if (token == ",") {
-                lexemes.emplace_back(LexType::COMMA, ",");
+                lexemes->emplace_back(LexType::COMMA, ",");
                 token.clear();
             } else if (token == "=") {
-                lexemes.emplace_back(LexType::EQUALS, "=");
+                lexemes->emplace_back(LexType::EQUALS, "=");
                 token.clear();
             } else if (token == "+") {
-                lexemes.emplace_back(LexType::PLUS, "+");
+                lexemes->emplace_back(LexType::PLUS, "+");
                 token.clear();
             } else if (token == "-") {
-                lexemes.emplace_back(LexType::MINUS, "-");
+                lexemes->emplace_back(LexType::MINUS, "-");
                 token.clear();
             } else if (token == "*") {
-                lexemes.emplace_back(LexType::ASTERISK, "*");
+                lexemes->emplace_back(LexType::ASTERISK, "*");
                 token.clear();
             } else if (token == ">") {
-                lexemes.emplace_back(LexType::GREATER_THAN, ">");
+                lexemes->emplace_back(LexType::GREATER_THAN, ">");
                 token.clear();
             } else if (token == "<") {
-                lexemes.emplace_back(LexType::LESS_THAN, "<");
+                lexemes->emplace_back(LexType::LESS_THAN, "<");
                 token.clear();
             } else if (token == "!") {
-                lexemes.emplace_back(LexType::EXCLAMATION, "!");
+                lexemes->emplace_back(LexType::EXCLAMATION, "!");
                 token.clear();
             } else if (token == "&") {
-                lexemes.emplace_back(LexType::AMPERSAND, "&");
+                lexemes->emplace_back(LexType::AMPERSAND, "&");
                 token.clear();
             } else if (token == "^") {
-                lexemes.emplace_back(LexType::CARET, "^");
+                lexemes->emplace_back(LexType::CARET, "^");
                 token.clear();
             } else if (token == "~") {
-                lexemes.emplace_back(LexType::TILDE, "~");
+                lexemes->emplace_back(LexType::TILDE, "~");
                 token.clear();
             } else if (token == ".") {
-                lexemes.emplace_back(LexType::DOT, ".");
+                lexemes->emplace_back(LexType::DOT, ".");
                 token.clear();
             } else if (token == "|") {
-                lexemes.emplace_back(LexType::PIPE, "|");
+                lexemes->emplace_back(LexType::PIPE, "|");
                 token.clear();
             } else if (token == "/") {
-                lexemes.emplace_back(LexType::FORWARD_SLASH, "/");
+                lexemes->emplace_back(LexType::FORWARD_SLASH, "/");
                 token.clear();
             } else if (token == "%") {
-                lexemes.emplace_back(LexType::PERCENT, "%");
+                lexemes->emplace_back(LexType::PERCENT, "%");
                 token.clear();
             } else if (is_literal(token)) {
-                lexemes.emplace_back(LexType::LITERAL, token);
+                lexemes->emplace_back(LexType::LITERAL, token);
                 token.clear();
             } else if (is_identifier(token)) {
-                lexemes.emplace_back(LexType::IDENTIFIER, token);
+                lexemes->emplace_back(LexType::IDENTIFIER, token);
                 token.clear();
             } else if (!token.empty()) {
-                lexemes.emplace_back(LexType::ILLEGAL, token);
+                lexemes->emplace_back(LexType::ILLEGAL, token);
                 token.clear();
             }
 
             skip_spaces();
             token += consume();
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
         }
 
         cursor = 0;
     }
 
-    const std::list<Lexeme> &Lexer::get_lexemes() const {
-        return lexemes;
-    }
 
     bool Lexer::done() {
-        return cursor >= to_lex.length();
+        return cursor >= m_line.length();
     }
 
     bool Lexer::is_identifier(std::string_view str) {
@@ -131,7 +129,7 @@ namespace hasha {
     std::string Lexer::consume_special() {
         auto token = std::string();
 
-        auto curr = to_lex[cursor];
+        auto curr = m_line[cursor];
         if (is_legal(curr) && !done()) {
             token += curr;
             cursor++;
@@ -142,7 +140,7 @@ namespace hasha {
     std::string Lexer::consume_illegal() {
         auto token = std::string();
 
-        auto curr = to_lex[cursor];
+        auto curr = m_line[cursor];
         if (!is_legal(curr) && !done()) {
             token += curr;
             cursor++;
@@ -154,13 +152,13 @@ namespace hasha {
         auto token = std::string();
 
         while (!done()) {
-            auto curr = to_lex[cursor];
+            auto curr = m_line[cursor];
 
             auto is_alpha_numeric = std::isalnum(curr);
             auto is_underscore = curr == '_';
 
             if (is_alpha_numeric || is_underscore) {
-                token += to_lex[cursor];
+                token += m_line[cursor];
                 cursor++;
             } else {
                 break;
@@ -177,16 +175,16 @@ namespace hasha {
     }
 
     void Lexer::skip_spaces() {
-        while (std::isspace(to_lex[cursor]) && !done())
+        while (std::isspace(m_line[cursor]) && !done())
             cursor++;
     }
 
-    void Lexer::dump_lexemes_as_json() {
+    void Lexer::dump_lexemes_as_json(const std::deque<Lexeme> &lexemes) {
         auto lexemes_json = nlohmann::json::array();
         for (const auto &lexeme: lexemes) {
             auto lexeme_json = nlohmann::json();
             lexeme_json["type"] = lexeme.get_type_as_string();
-            lexeme_json["data"] = lexeme.get_data();
+            lexeme_json["data"] = lexeme.get_data_as_string();
             lexemes_json.push_back(lexeme_json);
         }
         auto get_current_time_and_date = [] {
@@ -201,6 +199,18 @@ namespace hasha {
         auto file_name = fmt::format("lexer_output_{}.json", get_current_time_and_date());
         std::ofstream file(file_name);
         file << std::setw(4) << lexemes_json;
+    }
+
+    void Lexer::set_line(std::string_view line) {
+        m_line = line;
+    }
+
+    std::shared_ptr<std::deque<Lexeme>> Lexer::get_lexemes() const {
+        return lexemes;
+    }
+
+    Lexer::Lexer() {
+        lexemes = std::make_shared<std::deque<Lexeme>>();
     }
 
 

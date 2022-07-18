@@ -20,7 +20,7 @@ namespace hasha {
         m_lex_data = std::move(lexeme_data);
     }
 
-    std::string Lexeme::get_data() const {
+    std::string Lexeme::get_data_as_string() const {
         return m_lex_data;
     }
 
@@ -30,6 +30,14 @@ namespace hasha {
 
     std::string Lexeme::to_string() const {
         return fmt::format("{} {}", get_type_as_string(), m_lex_data);
+    }
+
+    LexType Lexeme::get_type() const {
+        return m_type;
+    }
+
+    std::string Lexeme::get_data() const {
+        return m_lex_data;
     }
 
 } // hasha
