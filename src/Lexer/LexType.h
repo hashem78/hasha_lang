@@ -28,6 +28,7 @@ enum class LexType {
     DOT,
     PIPE,
     FORWARD_SLASH,
+    SEMI_COLON,
     PERCENT,
     LITERAL,
     IDENTIFIER,

@@ -81,6 +81,9 @@ namespace hasha {
             } else if (token == "%") {
                 lexemes->emplace_back(LexType::PERCENT, "%");
                 token.clear();
+            } else if (token == ";") {
+                lexemes->emplace_back(LexType::SEMI_COLON, ";");
+                token.clear();
             } else if (is_literal(token)) {
                 lexemes->emplace_back(LexType::LITERAL, token);
                 token.clear();
@@ -122,7 +125,7 @@ namespace hasha {
     }
 
     bool Lexer::is_legal(char c) {
-        auto special = std::string("{}[]()=+-*/%,<>!&^~.|");
+        auto special = std::string("{}[]()=+-*/%,<>!&^~.|;");
         for (auto ch: special)
             if (ch == c)
                 return true;
